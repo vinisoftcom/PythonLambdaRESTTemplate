@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'zaufakturybe
+
+  SAM Template for zaufakturybe
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Outputs:
+  AgendaApi:
+    Description: API Gateway endpoint URL for listing contacts
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/account/agenda/listcontacts
+  AgendaFunction:
+    Description: Agenda List Contacts ARN
+    Value:
+      Fn::GetAtt:
+      - AgendaListContactsFunction
+      - Arn
+  AgendaFunctionIamRole:
+    Description: Implicit IAM Role created for Agenda List Contacts function
+    Value:
+      Fn::GetAtt:
+      - AgendaListContactsFunctionRole
+      - Arn
+Resources:
+  AgendaListContactsFunction:
+    Properties:
+      CodeUri: s3://zaufakturybe/5e41ad683c38618206b556e535b14686
+      Events:
+        HelloWorld:
+          Properties:
+            Method: get
+            Path: /account/agenda/listcontacts
+          Type: Api
+      Handler: agenda.list_contacts
+      Runtime: python3.7
+    Type: AWS::Serverless::Function
+  AgendaSaveContactFunction:
+    Properties:
+      CodeUri: s3://zaufakturybe/e8ebbfaf52f5da85d9608b2cfc5cdaa8
+      Events:
+        HelloWorld:
+          Properties:
+            Method: post
+            Path: /account/agenda/savecontact
+          Type: Api
+      Handler: agenda.save_contact
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: TestTableContacts
+      Runtime: python3.7
+    Type: AWS::Serverless::Function
+  TestTableContacts:
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: contactId
+        AttributeType: S
+      - AttributeName: contact
+        AttributeType: S
+      KeySchema:
+      - AttributeName: contactId
+        KeyType: HASH
+      - AttributeName: contact
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      SSESpecification:
+        SSEEnabled: true
+      TableName: TestTableContacts
+    Type: AWS::DynamoDB::Table
+Transform: AWS::Serverless-2016-10-31
