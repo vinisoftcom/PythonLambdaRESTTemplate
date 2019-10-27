@@ -19,12 +19,12 @@ def save_contact(event, context):
     dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
     table = dynamodb.Table('TestTableContacts')
     
-    print("Event recieved {0}".format(event['data']))
+    print("Event recieved {0}".format(event['body']))
 
     response = table.put_item(
        Item={
             'contactId': "contact{0}".format(random.randint(1,999999)),
-            'contact': "2"
+            'contact': event['body']
         }
     )
 
