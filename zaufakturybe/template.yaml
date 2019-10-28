@@ -56,6 +56,22 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName: TestTableContacts
+   AgendaDeleteContactFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: account/
+      Handler: agenda.delete_contacts
+      Runtime: python3.7
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /account/agenda/deletecontact
+            Method: delete
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: TestTableContacts
+
 
 Outputs:
   AgendaApi:
