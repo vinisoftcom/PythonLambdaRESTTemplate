@@ -35,3 +35,16 @@ def save_contact(event, context):
             "message": "Contact saved"
         }),
     }
+
+def delete_contacts(event, context):
+    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
+    table = dynamodb.Table('TestTableContacts')
+    
+    print("Event recieved {0}".format(event))
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Contact deleted"
+        }),
+    }
