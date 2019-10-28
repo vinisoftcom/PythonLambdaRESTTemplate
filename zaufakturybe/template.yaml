@@ -5,6 +5,18 @@ Description: >
 
   SAM Template for zaufakturybe
 
+Parameters:
+  TestTableContactsName:
+    AllowedPattern: ^[A-Za-z_]+$
+    ConstraintDescription: Required. Can be characters and underscore only. No numbers
+      or special characters allowed.
+    Default: TestTableContacts
+    Description: (Required) The name of the new DynamoDB to store connection identifiers
+      for each connected clients. Minimum 3 characters
+    MaxLength: 50
+    MinLength: 3
+    Type: String
+
 Globals:
   Function:
     Timeout: 3
@@ -28,7 +40,8 @@ Resources:
         WriteCapacityUnits: 5
       SSESpecification:
         SSEEnabled: True
-      TableName: TestTableContacts
+      TableName: 
+        Ref: TestTableContactsName
   AgendaListContactsFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -41,6 +54,10 @@ Resources:
           Properties:
             Path: /account/agenda/listcontacts
             Method: get
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: 
+            Ref: TestTableContactsName
   AgendaSaveContactFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -55,7 +72,8 @@ Resources:
             Method: post
       Policies:
       - DynamoDBCrudPolicy:
-          TableName: TestTableContacts
+          TableName: 
+            Ref: TestTableContactsName
    AgendaDeleteContactFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -70,7 +88,8 @@ Resources:
             Method: delete
       Policies:
       - DynamoDBCrudPolicy:
-          TableName: TestTableContacts
+          TableName: 
+            Ref: TestTableContactsName
 
 
 Outputs:
