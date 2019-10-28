@@ -4,11 +4,12 @@ import random
 
 # import requests
 
-
+tableName="TableContacts"
+region="eu-central-1"
 
 def list_contacts(event, context):
-    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
-    table = dynamodb.Table('TableContacts')
+    dynamodb = boto3.resource('dynamodb', region_name=region)
+    table = dynamodb.Table(tableName)
     scanResponse = table.scan()
     return {
         "statusCode": 200,
@@ -16,8 +17,8 @@ def list_contacts(event, context):
     }
 
 def save_contact(event, context):
-    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
-    table = dynamodb.Table('TableContacts')
+    dynamodb = boto3.resource('dynamodb', region_name=region)
+    table = dynamodb.Table(tableName)
     
     print("Event recieved {0}".format(event['body']))
 
@@ -37,8 +38,8 @@ def save_contact(event, context):
     }
 
 def delete_contacts(event, context):
-    dynamodb = boto3.resource('dynamodb', region_name='eu-central-1')
-    table = dynamodb.Table('TableContacts')
+    dynamodb = boto3.resource('dynamodb', region_name=region)
+    table = dynamodb.Table(tableName)
     
     print("Event recieved {0}".format(event))
 
