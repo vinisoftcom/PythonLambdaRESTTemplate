@@ -208,3 +208,10 @@ aws cloudformation describe-stacks \
 sam logs -n HelloWorldFunction --stack-name zaufakturybe --tail
 ```
 
+# Sample curl calls
+# List
+curl http://127.0.0.1:3000/account/agenda/listcontacts
+# Create
+curl -X POST http://127.0.0.1:3000/account/agenda/savecontact -d {"name":"nothing"}
+# Delete
+curl -X DELETE http://127.0.0.1:3000/account/agenda/deletecontact\?id\={here_some_id}
