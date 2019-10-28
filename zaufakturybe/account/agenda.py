@@ -40,12 +40,13 @@ def save_contact(event, context):
 def delete_contacts(event, context):
     dynamodb = boto3.resource('dynamodb', region_name=region)
     table = dynamodb.Table(tableName)
-    
+    removeContactId = event['queryStringParameters']['id']
     print("Event recieved {0}".format(event))
+    print("Removing contact with ID {0}".format(removeContactId))
 	
-	response = table.delete_item(
+    response = table.delete_item(
         Key={
-			'contactId': event['id']
+            'contactId': removeContactId
         }
     )
 
