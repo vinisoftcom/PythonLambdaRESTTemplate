@@ -6,7 +6,7 @@ Description: >
   SAM Template for zaufakturybe
 
 Parameters:
-  TestTableContactsName:
+  TableContactsName:
     AllowedPattern: ^[A-Za-z_]+$
     ConstraintDescription: Required. Can be characters and underscore only. No numbers
       or special characters allowed.
