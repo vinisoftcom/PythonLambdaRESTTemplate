@@ -42,6 +42,14 @@ def delete_contacts(event, context):
     table = dynamodb.Table(tableName)
     
     print("Event recieved {0}".format(event))
+	
+	response = table.delete_item(
+        Key={
+			'contactId': event['id']
+        }
+    )
+
+    print("Delete response {0}".format(response))
 
     return {
         "statusCode": 200,
