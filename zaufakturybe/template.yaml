@@ -10,7 +10,7 @@ Parameters:
     AllowedPattern: ^[A-Za-z_]+$
     ConstraintDescription: Required. Can be characters and underscore only. No numbers
       or special characters allowed.
-    Default: TestTableContacts
+    Default: TableContacts
     Description: (Required) The name of the new DynamoDB to store connection identifiers
       for each connected clients. Minimum 3 characters
     MaxLength: 50
@@ -22,7 +22,7 @@ Globals:
     Timeout: 3
 
 Resources:
-  TestTableContacts:
+  TableContacts:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
@@ -41,7 +41,7 @@ Resources:
       SSESpecification:
         SSEEnabled: True
       TableName: 
-        Ref: TestTableContactsName
+        Ref: TableContactsName
   AgendaListContactsFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -57,7 +57,7 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName: 
-            Ref: TestTableContactsName
+            Ref: TableContactsName
   AgendaSaveContactFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -73,7 +73,7 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName: 
-            Ref: TestTableContactsName
+            Ref: TableContactsName
    AgendaDeleteContactFunction:
     Type: AWS::Serverless::Function 
     Properties:
@@ -89,7 +89,7 @@ Resources:
       Policies:
       - DynamoDBCrudPolicy:
           TableName: 
-            Ref: TestTableContactsName
+            Ref: TableContactsName
 
 
 Outputs:
